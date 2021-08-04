@@ -27,6 +27,11 @@ public class BaseClass {
 		SportsLeague sl2 = SportsLeague.NBA; 
 		System.out.println(sl2.name()+" "+sl2.ordinal());
 		
+		Armor1 a11 = new Armor1("icon", 12, 13);
+		System.out.println(a11.disposable());
+		LifePotion1 lp1 = new LifePotion1("mann", 15);
+		System.out.println(lp1.disposable());
+		
 
 	}
 
@@ -44,15 +49,58 @@ class Item {
 	public Item(String n) {
 		this(n, 180); //调用Item(String n, int p)这个构造方法，多构造方法的体现
 	}
-
+	public String getName() {
+		return this.name;
+	}
 }
 
 class Armor extends Item{
 	public int ac;
-	public Armor(String n, int p, int ac) {
+	public Armor(String n, int p, int ac) {// 如果父类显示定义了构造函数，那么子类就必须也显示定义构造函数，且需要下一行的super
 		super(n, p); //子类的构造函数里必须写这一句，先进行父类的构造。类似于python里的super().__init__(...)
 		this.ac = ac;
-		
+	}
+}
+
+
+abstract class Item1 {//抽象类
+	public String name;
+	public int price;
+	
+	public Item1(String n, int p) {
+		// TODO Auto-generated constructor stub
+		this.name = n;
+		this.price = p;
+	}
+	public Item1(String n) {
+		this(n, 180); //调用Item(String n, int p)这个构造方法，多构造方法的体现
+	}
+	public String getName() { //抽象类里可以定义普通的method
+		return this.name;
+	}
+	public abstract boolean disposable(); //只要有一个抽象方法，该类就必须声明为抽象类
+
+}
+
+class Armor1 extends Item1{
+	public int ac;
+	public Armor1(String n, int p, int ac) {// 如果父类显示定义了构造函数，那么子类就必须也显示定义构造函数，且需要下一行的super
+		super(n, p); //子类的构造函数里必须写这一句，先进行父类的构造。类似于python里的super().__init__(...)
+		this.ac = ac;
+	}
+	@Override
+	public boolean disposable() {
+		return false;
+	}
+}
+
+class LifePotion1 extends Item1{
+	public LifePotion1(String n, int p) {
+		super(n, p);
+	}
+	@Override
+	public boolean disposable() {
+		return true;
 	}
 }
 

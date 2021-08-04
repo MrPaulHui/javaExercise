@@ -64,7 +64,7 @@ https://www.liaoxuefeng.com/wiki/1252599548343744/1255878730977024
 public：
 ①具有最大的访问权限，可以访问任何一个在classpath下的类、接口、异常等。它往往用于对外的情况，也就是对象或类对外的一种接口的形式。（我们可以通过get方法访问，也可以对象.属性名来访问）
 private：
-①类的创建者和内部方法使用（注意只能是本类，不是本对象）,内部类也无法使用
+①类的创建者和内部方法使用（注意只能是本类，不是本对象）,内部类可以使用（通过Outer.this.field）
 
 protected:
 ①子类可以访问protected修饰的变量和方法。（只要是子类，即使不同包）。②同包中可以访问protected。
@@ -97,3 +97,35 @@ protected:
 
 可参照ModernClass.java
 
+### 类
+
+#### 继承
+
+1. 在Java中，任何`class`的构造方法，第一行语句必须是调用父类的构造方法
+
+#### 内部类
+
+内部类实例化方法
+
+```java
+OuterClass oc1 = new OuterClass(10);
+OuterClass.InnerClass in1 = oc1.new InnerClass();
+```
+
+匿名类中不可以新建方法，只可以复写方法！！
+
+匿名类本质上是基于继承
+
+接口是特殊的类，所以实现接口本质上也是继承
+
+### 异常处理
+
+Java使用异常来表示错误，并通过`try ... catch`捕获异常；
+
+Java的异常是`class`，并且从`Throwable`继承；
+
+`Error`是无需捕获的严重错误，`Exception`是应该捕获的可处理的错误；
+
+`RuntimeException`无需强制捕获，非`RuntimeException`（Checked Exception）需强制捕获，或者用`throws`声明；
+
+不推荐捕获了异常但不进行任何处理。

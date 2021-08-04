@@ -10,6 +10,7 @@ public class ModernClass {
 		s1.heal(h1);
 		System.out.println(h1.life);
 		System.out.println(s1.life);
+		s1.run();
 		Heros ssx = new Heros();
 		ADheros ad1 = new ADheros();
 		APheros ap1 = new APheros();
@@ -20,6 +21,11 @@ public class ModernClass {
 		System.out.println(it1.toString());
 		System.out.println(it1.equals(s1));
 		System.out.println(it1.equals(it2));
+		
+		OuterClass oc1 = new OuterClass(10);
+		OuterClass.InnerClass in1 = oc1.new InnerClass(); //内部类实例化的固定格式！
+		System.out.println(in1.getOa());
+		oc1.creatClass();
 
 	}
 
@@ -28,6 +34,9 @@ public class ModernClass {
 interface Healer{
 	void healself(); //= public abstract void healself();
 	void heal(Heros h);
+	default void run() { //default method in interface, which do not need to override in implements class
+		System.out.println("run");
+	}
 }
 
 interface Mortal{
@@ -121,3 +130,30 @@ class Items {
 
 }
 
+class OuterClass{
+	private int oa;
+	public OuterClass(int a) {
+		this.oa = a;
+	}
+	class InnerClass{ //内部类
+		public int getOa() {
+			return OuterClass.this.oa; //内部类可以通过这种方式访问外部类的字段
+		}
+	}
+	public void creatClass() {//创建匿名类
+		Items ii = new Items("niming") {
+			@Override
+			public String toString() {
+				return "in niming";
+			}
+		}; //匿名类的创建方法，继承Items这个普通类，继承普通类的时候，不可以新建方法，其实继承接口，也只是复写了接口里的方法!
+		Mortal mm = new Mortal() { //匿名类继承接口，实现接口
+			@Override
+			public void die() {
+				System.out.println("niming die");
+			}
+		};
+		mm.die();
+		System.out.println(ii.toString());
+	}
+}
